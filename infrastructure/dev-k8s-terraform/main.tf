@@ -86,12 +86,16 @@ resource "aws_iam_instance_profile" "petclinic-master-server-profile" {
 
 resource "aws_instance" "kube-master" {
   ami = "ami-005fc0f236362e99f"
-  instance_type = "t3a.medium"
+  instance_type = "t3a.large"
   iam_instance_profile = aws_iam_instance_profile.petclinic-master-server-profile.name
   vpc_security_group_ids = [aws_security_group.k8s-sec-gr.id]
   key_name = "clarus"
   subnet_id = "subnet-002853d3ae3c0de32"  # select own subnet_id of us-east-1a
   availability_zone = "us-east-1a"
+  root_block_device {
+    volume_size = 30
+    volume_type = "gp3"
+  }
   tags = {
     Name = "kube-master"
     Project = "tera-kube-ans"
@@ -103,11 +107,15 @@ resource "aws_instance" "kube-master" {
 
 resource "aws_instance" "worker-1" {
   ami = "ami-005fc0f236362e99f"
-  instance_type = "t3a.medium"
+  instance_type = "t3a.large"
   vpc_security_group_ids = [aws_security_group.k8s-sec-gr.id]
   key_name = "clarus"
   subnet_id = "subnet-002853d3ae3c0de32"  # select own subnet_id of us-east-1a
   availability_zone = "us-east-1a"
+  root_block_device {
+    volume_size = 30
+    volume_type = "gp3"
+  }
   tags = {
     Name = "worker-1"
     Project = "tera-kube-ans"
@@ -119,11 +127,15 @@ resource "aws_instance" "worker-1" {
 
 resource "aws_instance" "worker-2" {
   ami = "ami-005fc0f236362e99f"
-  instance_type = "t3a.medium"
+  instance_type = "t3a.large"
   vpc_security_group_ids = [aws_security_group.k8s-sec-gr.id]
   key_name = "clarus"
   subnet_id = "subnet-002853d3ae3c0de32"  # select own subnet_id of us-east-1a
   availability_zone = "us-east-1a"
+  root_block_device {
+    volume_size = 30
+    volume_type = "gp3"
+  }
   tags = {
     Name = "worker-2"
     Project = "tera-kube-ans"
